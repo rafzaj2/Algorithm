@@ -1,0 +1,130 @@
+// Peak finding 
+// version 1D - dimensional
+// version 2D - dimensional
+
+
+
+#include <iostream>
+using namespace std;
+
+
+void array_screen(int array[]);
+
+//***********************************************************
+int peak_finder(int array[], int low, int high)
+{
+	int up_bound = high;
+	int down_bound = low;
+	int middle = low + (high - low) / 2;
+
+	if ((middle) != (down_bound) && array[middle - 1] > array[middle])
+	{
+		peak_finder(array, low, middle);
+	}
+	else if ((middle) != (up_bound) && array[middle + 1] > array[middle] )
+	{
+		peak_finder(array, middle + 1, high);
+	}
+	else
+	{
+		return middle;
+	}
+}
+//***********************************************************
+//***********************************************************
+	template<std::size_t N>
+	void peak_finder_2D(int a[][N], int low = 0, int high = N - 1)
+	{
+		int up_bound = high;
+		int down_bound = low;
+		int middle = low + (high - low) / 2;
+		int* column_tabele = column_bilder(a, middle);
+		int global_max = peak_finder(column_tabele, 0, N - 1);
+		delete[] column_tabele;
+		if ((middle) != (down_bound) && a[global_max][middle-1] > a[global_max][middle])
+		{
+
+			peak_finder_2D(a, low, middle);
+		}
+		else if ((middle) != (up_bound) && a[global_max][middle + 1] > a[global_max][middle])
+		{
+
+			peak_finder_2D(a, middle + 1, high);
+		}
+		else
+		{
+			cout << "Coordinates of peak are: x= " << middle << " y= " << global_max  << endl;
+			cout << "Vaule of peak is: " << a[middle][global_max];
+		}
+
+	}
+//***********************************************************
+//***********************************************************
+	template<std::size_t N>
+	int* column_bilder(int a[][N],int column_index)
+	{
+		int *tabele;
+		tabele = new int[N];
+		for (int i = 0; i < N; i++)
+		{
+			tabele[i] = a[i][column_index];
+		}
+		return tabele;
+
+	}
+//***********************************************************
+	template<std::size_t N>
+	int* row_bilder(int a[][N],int row_index)
+	{
+		
+		int *tabele;
+		tabele = new int[N];
+		for (int i = 0; i < N; i++)
+		{
+			*tabele[i] = a[row_index][i];
+		}
+		return tabele;
+
+	}
+//***********************************************************
+void peak_screen_manager(int array[], int n)
+{
+
+	int position = peak_finder(array, 0, n - 1);
+	cout << "Index of peak point in array is: " << position << endl;
+	cout << "Value of peak which was found is: " << array[position] << endl;
+}
+
+//***********************************************************
+//***********************************************************
+int main()
+{
+	int Tablica[] = { 1,2,3,4,4,4,4,4,5,6,7,8,9,9,0};
+	int Tab_2[10][10] = { { 3,3,3,1,2,3,4,5,6 },{ 3,2,5,1,5,3,4,5,6 },{ 3,3,3,1,2,3,4,5,6 },{ 3,3,3,1,2,3,4,5,6 } ,{ 3,3,3,1,2,3,4,5,6 },{ 3,3,3,1,2,3,4,5,6 },{ 3,3,3,1,2,3,4,5,6 } };
+
+	for (int i = 0; i < 10; i++)
+	{
+		cout << endl;
+		for (int j = 0; j < 10; j++)
+		{
+			cout << Tab_2[i][j] << "\t";
+		}
+	}
+
+	cout << endl;
+	peak_finder_2D(Tab_2);
+	cout << endl;
+	system("pause");
+	return 0;
+}
+//***********************************************************
+//***********************************************************
+void array_screen(int array[])
+{
+	cout << "********************10 firts elements of array******************************" << endl;
+	for (int j = 0; j < 10; j++)
+	{
+		cout << array[j] << "\t";
+	}
+	cout << "********************10 firts elements of array******************************" << endl;
+}
