@@ -1,0 +1,104 @@
+//There is example of list below. Component of the list will be object which type is student.
+
+#include<iostream>
+#include<iomanip>
+#include<string>
+
+using namespace std;
+
+//************************************************************************************************************************
+
+struct student
+{
+	string name;
+	string surname;
+	string faculty;
+	string index_no;
+	student* next;
+	student();
+	void display_record();
+};
+
+
+void student::display_record()
+{
+	cout << left << setw(15) << this->name << setw(15) << this->surname << setw(15) << this->faculty << setw(15) << this->index_no << endl;
+}
+
+
+student::student()
+{
+	next = 0;
+}
+//************************************************************************************************************************
+struct list
+{
+	student* first;
+	void display_list();
+	void insert_student(string name, string surname, string faculty, string index_no);
+	list();
+};
+
+
+void list::display_list()
+{
+	if (first == 0)
+	{
+		cout << "The list is empty!" << endl;
+	}
+	else
+	{
+		student* current = first;
+		cout << left << setw(15) << "NAME" << setw(15) << "SURNAME" << setw(15) << "FACULTY" << setw(15) << "INDEX-NO" << endl;
+		while (current)
+		{
+			current->display_record();
+			current = current->next;
+		}
+	}
+
+}
+
+void list::insert_student(string name, string surname, string faculty, string index_no)
+{
+	student* new_student = new student;
+	new_student->name = name;
+	new_student->surname = surname;
+	new_student->faculty = faculty;
+	new_student->index_no = index_no;
+
+	if (first == 0)
+	{
+		first = new_student;
+	}
+	else
+	{
+		student* current = first;
+		while (current->next)
+		{
+			current = current->next;
+		}
+		current->next = new_student;
+		new_student->next = 0;
+	}
+}
+
+list::list()
+{
+	first = 0;
+}
+
+
+
+//************************************************************************************************************************
+
+int main()
+{
+	list deanery_list;
+	deanery_list.insert_student("Rafal", "Zajac", "Matematyka", "1234342");
+	deanery_list.insert_student("Klaudia", "Chaja", "Rachunkowosc", "2134322");
+	deanery_list.insert_student("Piotr", "Chaja", "Energetyka", "5468975");
+	deanery_list.display_list();
+	system("pause");
+	return 0;
+}
