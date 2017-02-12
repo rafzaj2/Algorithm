@@ -38,6 +38,7 @@ struct list
 	student* first;
 	void display_list();
 	void insert_student(string name, string surname, string faculty, string index_no);
+	void delete_student(int number);
 	list();
 };
 
@@ -90,11 +91,18 @@ void list::insert_student(string name, string surname, string faculty, string in
 
 //************************************************************************************************************************
 
+void list::delete_student(int number);
+{
+	
+
+}
+
+//************************************************************************************************************************
+
 list::list()
 {
 	first = 0;
 }
-
 
 //************************************************************************************************************************
 
